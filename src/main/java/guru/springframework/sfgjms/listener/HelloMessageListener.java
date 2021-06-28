@@ -25,23 +25,20 @@ public class HelloMessageListener {
 
     @JmsListener(destination = JmsConfig.MY_QUEUE)
     public void listen(@Payload HelloWorldMessage helloWorldMessage,
-                       @Headers MessageHeaders headers, Message message){
-
+                       @Headers MessageHeaders headers, Message message) {
         //System.out.println("I Got a Message!!!!!");
 
-       // System.out.println(helloWorldMessage);
+        // System.out.println(helloWorldMessage);
 
 
         // uncomment and view to see retry count in debugger
-       // throw new RuntimeException("foo");
-
+        // throw new RuntimeException("foo");
     }
 
     @JmsListener(destination = JmsConfig.MY_SEND_RCV_QUEUE)
     public void listenForHello(@Payload HelloWorldMessage helloWorldMessage,
-                       @Headers MessageHeaders headers, Message jmsMessage,
+                               @Headers MessageHeaders headers, Message jmsMessage,
                                org.springframework.messaging.Message springMessage) throws JMSException {
-
         HelloWorldMessage payloadMsg = HelloWorldMessage
                 .builder()
                 .id(UUID.randomUUID())
@@ -49,10 +46,8 @@ public class HelloMessageListener {
                 .build();
 
         //example to use Spring Message type
-       // jmsTemplate.convertAndSend((Destination) springMessage.getHeaders().get("jms_replyTo"), "got it!");
+        // jmsTemplate.convertAndSend((Destination) springMessage.getHeaders().get("jms_replyTo"), "got it!");
 
         jmsTemplate.convertAndSend(jmsMessage.getJMSReplyTo(), payloadMsg);
-
     }
-
 }

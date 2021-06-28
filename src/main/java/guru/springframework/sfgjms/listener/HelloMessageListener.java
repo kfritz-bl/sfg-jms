@@ -25,30 +25,30 @@ public class HelloMessageListener {
 
     @JmsListener(destination = JmsConfig.MY_QUEUE)
     public void listen(@Payload HelloWorldMessage helloWorldMessage,
-                       @Headers MessageHeaders headers, Message message){
+                       @Headers MessageHeaders headers, Message message) {
 
         //System.out.println("I Got a Message!!!!!");
 
-       // System.out.println(helloWorldMessage);
+        // System.out.println(helloWorldMessage);
 
 
         // uncomment and view to see retry count in debugger
-       // throw new RuntimeException("foo");
-
+        // throw new RuntimeException("foo");
     }
 
     @JmsListener(destination = JmsConfig.MY_SEND_RCV_QUEUE)
     public void listenForHello(@Payload HelloWorldMessage helloWorldMessage,
-                       @Headers MessageHeaders headers, Message message) throws JMSException {
+                               @Headers MessageHeaders headers, Message message) throws JMSException {
 
+        //Create the reply message.
         HelloWorldMessage payloadMsg = HelloWorldMessage
                 .builder()
                 .id(UUID.randomUUID())
                 .message("World!!")
                 .build();
 
+        //Send the reply.
         jmsTemplate.convertAndSend(message.getJMSReplyTo(), payloadMsg);
 
     }
-
 }

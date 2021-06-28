@@ -26,8 +26,7 @@ public class HelloSender {
     private final ObjectMapper objectMapper;
 
     @Scheduled(fixedRate = 2000)
-    public void sendMessage(){
-
+    public void sendMessage() {
         HelloWorldMessage message = HelloWorldMessage
                 .builder()
                 .id(UUID.randomUUID())
@@ -35,12 +34,10 @@ public class HelloSender {
                 .build();
 
         jmsTemplate.convertAndSend(JmsConfig.MY_QUEUE, message);
-
     }
 
     @Scheduled(fixedRate = 2000)
     public void sendandReceiveMessage() throws JMSException {
-
         HelloWorldMessage message = HelloWorldMessage
                 .builder()
                 .id(UUID.randomUUID())
@@ -59,15 +56,12 @@ public class HelloSender {
                     System.out.println("Sending Hello");
 
                     return helloMessage;
-
                 } catch (JsonProcessingException e) {
-                   throw new JMSException("boom");
+                    throw new JMSException("boom");
                 }
             }
         });
 
         System.out.println(receviedMsg.getBody(String.class));
-
     }
-
 }

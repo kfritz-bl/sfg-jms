@@ -8,6 +8,7 @@ import org.springframework.jms.support.converter.MessageType;
 
 /**
  * Created by jt on 2019-07-17.
+ * Convert the sent message from a JSON payload to a Java object.
  */
 @Configuration
 public class JmsConfig {
@@ -16,7 +17,7 @@ public class JmsConfig {
     public static final String MY_SEND_RCV_QUEUE = "replybacktome";
 
     @Bean
-    public MessageConverter messageConverter(){
+    public MessageConverter messageConverter() {
         MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
         converter.setTargetType(MessageType.TEXT);
         converter.setTypeIdPropertyName("_type");
